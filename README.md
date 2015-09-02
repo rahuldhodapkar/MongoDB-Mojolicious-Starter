@@ -8,5 +8,5 @@ Node.js)[https://github.com/sahat/hackathon-starter], which can be used
 as a reference for the project goals.
 
 ## Currently Embedded
-- Bootstrap
+- (Bootstrap)[http://getbootstrap.com/2.3.2/]
 
