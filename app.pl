@@ -7,6 +7,6 @@ get '/' => sub {
         now => 'Hammer Time',
     );
     $self->render;
-} => 'base';
+} => 'index';
 
 app->start;
