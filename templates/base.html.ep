@@ -1,3 +1,9 @@
+<% my %pages = (
+    home => '/',
+    page1 => '/page1',
+    );
+   my $active = 'class="active"';
+%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -10,7 +16,18 @@
 
 <nav class="navbar navbar-default navbar-fixed">
   <div class="countainer-fluid">
-    <a class="navbar-brand" href="#">MyApp</a>
+    <div class="navbar-header">
+      <a class="navbar-brand" href="#">MyApp</a>
+    </div>
+    <div>
+      <ul class="nav navbar-nav">
+        % while (my ($page, $url) = each %pages) {
+            <li <%==$active if $current_page eq $page;%>>
+              <a href="<%=$url%>"><%= $page %></a>
+            </li>
+        % }    
+      </ul>
+    </div>
   </div>
 </nav>
 

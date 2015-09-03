@@ -1,4 +1,4 @@
-% extends 'base', current_page => 'home';
+% extends 'base', current_page => 'page1';
 
 % content body_content => begin
 Clobber this
