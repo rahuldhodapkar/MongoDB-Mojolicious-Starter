@@ -1,6 +1,6 @@
 <% my %pages = (
     home => '/',
-    page1 => '/page1',
+    post => '/post',
     );
    my $active = 'class="active"';
 %>
