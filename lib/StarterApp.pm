@@ -14,9 +14,11 @@ sub startup {
   # Normal route to controller
   $r->get('/')->to('index#show_home');
 
-  $r->get('/post')->to('post#make_post');
+  $r->get('/make_post')->to('post#make_post');
 
-  $r->get('/all_posts')->to('post#show_posts');
+  $r->get('/show_posts')->to('post#show_posts');
+
+  $r->post('/add_post_to_database')->to('post#save_post');
 
 }
 

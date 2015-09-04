@@ -1,0 +1,14 @@
+% extends 'base', current_page => 'make_post';
+
+% content body_content => begin
+<div style="width:300px">
+  <h1> Make a Post~ </h1>
+  <form action="add_post_to_database" method="post">
+    <div class="form-group">
+      <input type="text" class="form-control" name="poster_name" placeholder="Name"></input>
+      <textarea class="form-control" rows="3" name="post_body" placeholder="Your Post Here"></textarea>
+    </div>
+    <button type="submit" class="btn btn-default">Submit</button>
+  </form>
+</div>
+% end 

@@ -1,5 +1,0 @@
-% extends 'base', current_page => 'post';
-
-% content body_content => begin
-Clobber this
-% end 

@@ -12,4 +12,5 @@ as a reference for the project goals.
 
 
 ## Dependencies
-- Tie::IxHash
+- Tie::IxHash   (order-preserving hashes for Perl)
+- MongoDB       (official driver for MongoDB)

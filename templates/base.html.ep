@@ -3,7 +3,8 @@
    tie %pages, 'Tie::IxHash';
    %pages = (
      home => '/',
-     post => '/post',
+     make_post => '/make_post',
+     show_posts => '/show_posts',
    );
    my $active = 'class="active"';
 %>
