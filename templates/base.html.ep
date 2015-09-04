@@ -1,7 +1,10 @@
-<% my %pages = (
-    home => '/',
-    post => '/post',
-    );
+<% use Tie::IxHash;
+   my %pages;
+   tie %pages, 'Tie::IxHash';
+   %pages = (
+     home => '/',
+     post => '/post',
+   );
    my $active = 'class="active"';
 %>
 <!DOCTYPE html>
