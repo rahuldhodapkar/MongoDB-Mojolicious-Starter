@@ -7,10 +7,15 @@ A package with similar goals is (sahat's "Hackathon Starter" repository for
 Node.js)[https://github.com/sahat/hackathon-starter], which can be used
 as a reference for the project goals.
 
+## Getting Started
+can be run with either morbo or hypnotoad as:
+
+    morbo script/starter_app
+    hypnotoad script/starter_app
+
 ## Currently Embedded
 - (Bootstrap)[http://getbootstrap.com/2.3.2/]
 
-
 ## Dependencies
-- Tie::IxHash   (order-preserving hashes for Perl)
 - MongoDB       (official driver for MongoDB)
+- Crypt::SaltedHash
