@@ -1,5 +1,3 @@
-% extends 'base', current_page => 'home';
-
 % content body_content => begin
 Clobber this
 % end
