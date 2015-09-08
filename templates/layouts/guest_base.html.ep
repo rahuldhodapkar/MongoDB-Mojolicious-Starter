@@ -1,5 +1,7 @@
 <%
    my $active = 'class="active"';
+   my @main_menu_items = grep { $_->menu =~ qr/MAIN/ } @$menu_items;
+   my @signup_menu_items = grep { $_->menu =~ qr/SIGNUP/ } @$menu_items;
 %>
 <!DOCTYPE html>
 <html lang="en">
@@ -12,23 +14,34 @@
 <body>
 
 <nav class="navbar navbar-default navbar-fixed">
-  <div class="countainer-fluid">
-    <div class="navbar-header">
-      <a class="navbar-brand" href="#">MyApp</a>
-    </div>
-    <div>
-      <ul class="nav navbar-nav">
-        % for my $menu_item (@$menu_items) {
-            <li <%==$active if $current_page eq $menu_item->short_name;%>>
-              <a href="<%= $menu_item->slug %>"><%= $menu_item->short_name %></a>
-            </li>
-        % }    
-      </ul>
+  <div class="countainer-fluid"> 
+    <div class="container">
+      <div class="navbar-header">
+        <a class="navbar-brand" href="#">MyApp</a>
+      </div>
+      <div class="navbar-collapse collapse">
+        <ul class="nav navbar-nav">
+          % for my $menu_item (@main_menu_items) {
+              <li <%==$active if $current_page eq $menu_item->short_name;%>>
+                <a href="<%= $menu_item->slug %>"><%= $menu_item->short_name %></a>
+              </li>
+          % }    
+        </ul>
+        <ul class="nav navbar-nav navbar-right">
+          % for my $menu_item (@signup_menu_items) {
+              <li <%==$active if $current_page eq $menu_item->short_name;%>>
+                <a href="<%= $menu_item->slug %>"><%= $menu_item->short_name %></a>
+              </li>
+          % }
+        </ul>
+      </div>
     </div>
   </div>
 </nav>
 
+<div class="container">
 <%= content %>
+</div>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
