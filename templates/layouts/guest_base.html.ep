@@ -1,5 +1,5 @@
 <%
-    my $active = '';
+   my $active = 'class="active"';
 %>
 <!DOCTYPE html>
 <html lang="en">
@@ -19,7 +19,7 @@
     <div>
       <ul class="nav navbar-nav">
         % for my $menu_item (@$menu_items) {
-            <li <%==$active if $current_page eq $menu_item->unique_name();%>>
+            <li <%==$active if $current_page eq $menu_item->short_name;%>>
               <a href="<%= $menu_item->slug %>"><%= $menu_item->short_name %></a>
             </li>
         % }    

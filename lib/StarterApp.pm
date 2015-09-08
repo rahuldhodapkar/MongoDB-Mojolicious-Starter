@@ -55,6 +55,7 @@ sub define_routes_for_role {
                 action      => 'index#show_home',
                 short_name  => 'Home',
                 role        => 'GUEST',
+                menu        => 'MAIN',
             );
         
         push @routes, StarterApp::Util::RouteWrapper->new(
@@ -63,6 +64,7 @@ sub define_routes_for_role {
                 action      => 'auth#login',
                 short_name  => 'Log In',
                 role        => 'GUEST',
+                menu        => 'SIGNUP',
             );
 
         push @routes, StarterApp::Util::RouteWrapper->new(
@@ -71,6 +73,7 @@ sub define_routes_for_role {
                 action      => 'auth#signup',
                 short_name  => 'Sign Up',
                 role        => 'GUEST',
+                menu        => 'SIGNUP',
             );
     }
     else {

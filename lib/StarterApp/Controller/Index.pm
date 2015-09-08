@@ -4,16 +4,12 @@ use StarterApp;
 
 sub show_home {
   my $self = shift;
-  print "getting here\n";
-  my @menu_items = StarterApp::define_routes_for_role('GUEST');
-
-  print "with menu items @menu_items \n";
 
   $self->render( 
       template      => 'index/index',
       layout        => 'guest_base',
-      menu_items    => \@menu_items,
-      current_page  => '',
+      menu_items    => [StarterApp::define_routes_for_role('GUEST')],
+      current_page  => "Home"
   );
 }
 

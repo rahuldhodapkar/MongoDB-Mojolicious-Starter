@@ -1,3 +1,4 @@
-% content body_content => begin
-Clobber this
-% end
+<h1> Home </h1>
+
+<p>This is some material on the home page</p>
+
