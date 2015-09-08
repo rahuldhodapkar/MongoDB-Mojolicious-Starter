@@ -1,4 +1,15 @@
+<jumbotron>
 <h1> Sign Up </h1>
-
-<p> Sign up so you can make some blog posts </p>
+  <form action="create_user" method="post">
+    <div class="form-group">
+      <label for="email">Email</label>
+      <input type="email" class="form-control" id="email" placeholder="Email">
+    </div>
+    <div class="form-group">
+      <label for="password">Password</label>
+      <input type="password" class="form-control" id="password" placeholder="Password">
+    </div>
+    <button type="submit" class="btn btn-default">Submit</button>
+  </form>
+</jumbotron>
 

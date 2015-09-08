@@ -2,6 +2,9 @@ package StarterApp;
 
 use Mojo::Base 'Mojolicious';
 use StarterApp::Util::RouteWrapper;
+use MongoDB;
+
+our $db;
 
 # This method will run once at server start
 sub startup {
@@ -14,16 +17,22 @@ sub startup {
   my $r = $self->routes;
 
   $self->register_routes(define_routes_for_role('GUEST'));
+  $self->register_routes(define_utility_routes());
 
-  #   # Normal route to controller
-  #   $r->get('/')->to('index#show_home');
+  # Database Connection
+  my $client = MongoDB::MongoClient->new;
+  $db = $client->get_database( 'starter_app' );
+}
 
-  #   $r->get('/make_post')->to('post#make_post');
+sub db_connection {
+  return $db if defined $db;
+  print "\$db not defined : trying to reconnect\n";
 
-  #   $r->get('/show_posts')->to('post#show_posts');
+  my $client = MongoDB::MongoClient->new;
+  $db = $client->get_database( 'starter_app' );
 
-  #   $r->post('/add_post_to_database')->to('post#save_post');
-
+  return $db if defined $db;
+  print "failed to reconnect on localhost:27017, database may be down?";
 }
 
 sub register_routes {
@@ -82,5 +91,32 @@ sub define_routes_for_role {
 
     return @routes;
 }
+
+sub define_utility_routes {
+  my @routes = ();
+    
+
+  ## AUTHENTICATION routes
+  push @routes, StarterApp::Util::RouteWrapper->new(
+              slug        => '/authenticate_user',
+              method      => 'POST',
+              action      => 'auth#authenticate_user',
+              short_name  => 'Authenticate',
+              role        => 'GUEST',
+              menu        => 'NONE',
+          );
+
+  push @routes, StarterApp::Util::RouteWrapper->new(
+              slug        => '/create_user',
+              method      => 'POST',
+              action      => 'auth#create_user',
+              short_name  => 'CreateUser',
+              role        => 'GUEST',
+              menu        => 'NONE',
+          );
+
+  return @routes;
+}
+
 
 1;
