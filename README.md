@@ -19,3 +19,4 @@ can be run with either morbo or hypnotoad as:
 ## Dependencies
 - MongoDB       (official driver for MongoDB)
 - Crypt::SaltedHash
+- namespace::autoclean

@@ -45,6 +45,8 @@ sub create_user {
   my $email = $self->req->param('email');
   my $password = $self->req->param('password');
 
+  print "creating ($email, $password)\n";
+
   my $crypt = Crypt::SaltedHash->new( algorithm => 'SHA-512' );
   $crypt->add($password);
 
@@ -55,6 +57,7 @@ sub create_user {
     hashed_pass => $hashed_pass,
   });
   
+  print "entry created with _id: $id\n";
   $self->flash(message => 'User created successfully!');
   $self->redirect_to('/');
 }
@@ -71,12 +74,15 @@ sub authenticate_user {
   my $rec = $users->find_one({ '_id' => $email });
 
   my $crypt = Crypt::SaltedHash->new( algorithm => 'SHA-512' );
-  if ( $crypt->validate($rec->hashed_pass, $password) ){
+  if ( $crypt->validate($rec->{hashed_pass}, $password) ){
     print "authentication success!\n";
   }
   else {
     print "authentication failed\n";
   }
+
+  print "user authenticated with _id: $email\n";
+  $self->redirect_to('/');
 }
 
 1;
