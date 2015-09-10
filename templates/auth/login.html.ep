@@ -1,5 +1,10 @@
 <jumbotron>
 <h1> Login </h1>
+  % if (defined (stash 'errormsg')) {
+    <div class="alert alert-danger" role="alert">
+      <%== stash 'errormsg' if defined (stash 'errormsg'); %>
+    </div>
+  % }
   <form action="authenticate_user" method="post">
     <div class="form-group">
       <label for="email">Email</label>

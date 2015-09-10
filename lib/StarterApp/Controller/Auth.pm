@@ -6,34 +6,48 @@ use Crypt::SaltedHash;
 sub login {
   my $self = shift;
   
+  my %opts = ();
+  if ($self->flash('failed')) {
+    print "catching the failure\n";
+    $opts{errormsg} = 'username/password incorrect';
+  }
+
+  my @jnk = keys %opts;
+
+  print "@jnk\n";
+  
   $self->render( 
     template      => 'auth/login',
     layout        => 'guest_base',
     menu_items    => [StarterApp::define_routes_for_role('GUEST')],
-    current_page  => "Log In"
+    current_page  => "Log In",
+    %opts,
   );
 }
 
 sub signup {
   my $self = shift;
-  
+
+  my %opts = ();
+  if ($self->session('failed')) {
+    $opts{errormsg} => 'username already taken';
+  }
+
   $self->render( 
     template      => 'auth/signup',
     layout        => 'guest_base',
     menu_items    => [StarterApp::define_routes_for_role('GUEST')],
-    current_page  => "Sign Up"
+    current_page  => "Sign Up",
+    %opts,
   );
 }
 
-sub show_home {
-  my $self = shift;
+sub signout {
+  my ($self) = @_;
 
-  $self->render( 
-    template      => 'index/index',
-    layout        => 'guest_base',
-    menu_items    => [StarterApp::define_routes_for_role('GUEST')],
-    current_page  => "Home"
-  );
+  $self->session(expires => 1);
+
+  $self->redirect_to('/');
 }
 
 sub create_user {
@@ -53,12 +67,16 @@ sub create_user {
   my $hashed_pass = $crypt->generate();
   
   my $id = $users->insert({
-    _id => $email,
+    _id         => $email,
+    role        => 'USER',
     hashed_pass => $hashed_pass,
   });
   
   print "entry created with _id: $id\n";
-  $self->flash(message => 'User created successfully!');
+
+  $self->session(user => $email);
+  $self->session(role => 'USER');
+
   $self->redirect_to('/');
 }
 
@@ -75,14 +93,20 @@ sub authenticate_user {
 
   my $crypt = Crypt::SaltedHash->new( algorithm => 'SHA-512' );
   if ( $crypt->validate($rec->{hashed_pass}, $password) ){
-    print "authentication success!\n";
+    print "user authenticated with _id: $email\n";
+    $self->session(user => $email);
+    $self->session(role => 'USER');
+
+    $self->flash(failed => 0);
+    $self->redirect_to('/');
   }
   else {
     print "authentication failed\n";
+    $self->flash(failed => 1);
+    $self->redirect_to('login'); 
+
   }
 
-  print "user authenticated with _id: $email\n";
-  $self->redirect_to('/');
 }
 
 1;
