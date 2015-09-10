@@ -2,6 +2,7 @@ package StarterApp::Controller::Auth;
 use Mojo::Base 'Mojolicious::Controller';
 use StarterApp;
 use Crypt::SaltedHash;
+use Try::Tiny;
 
 sub login {
   my $self = shift;
@@ -29,8 +30,8 @@ sub signup {
   my $self = shift;
 
   my %opts = ();
-  if ($self->session('failed')) {
-    $opts{errormsg} => 'username already taken';
+  if ($self->flash('failed')) {
+    $opts{errormsg} = 'username already taken';
   }
 
   $self->render( 
@@ -66,18 +67,24 @@ sub create_user {
 
   my $hashed_pass = $crypt->generate();
   
-  my $id = $users->insert({
-    _id         => $email,
-    role        => 'USER',
-    hashed_pass => $hashed_pass,
-  });
-  
-  print "entry created with _id: $id\n";
+  try {
+    my $id = $users->insert({
+      _id         => $email,
+      role        => 'USER',
+      hashed_pass => $hashed_pass,
+    });
+      
+    print "entry created with _id: $id\n";
+    $self->session(user => $email);
+    $self->session(role => 'USER');
+    $self->redirect_to('/');
+  }
+  catch {
+    print "caught exception\n";
+    $self->flash(failed => 1);
+    $self->redirect_to('/signup');
+  };
 
-  $self->session(user => $email);
-  $self->session(role => 'USER');
-
-  $self->redirect_to('/');
 }
 
 sub authenticate_user {
