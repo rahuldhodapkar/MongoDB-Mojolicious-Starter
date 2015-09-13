@@ -52,6 +52,7 @@ sub register_routes {
 
     for my $route (@routes) {
         $method_map{$route->method}->($route->slug, $route->action);
+        #TODO: add role-based authentication to all routes here.
     }
 }
 
